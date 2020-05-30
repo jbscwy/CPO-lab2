@@ -1,18 +1,15 @@
 digraph G {
   rankdir=LR;
-  red[shape=rarrow];
-  green[shape=rarrow];
-  yellow[shape=rarrow];
-  n_0[0<t<=30];
-  n_1[30<t<=40];
-  n_2[40<t<=70];
+  red[];
+  green[];
+  yellow[];
 
-  red -> n_0;
-  green -> n_1;
-  yellow -> n_2;
 
-  n_0 -> green
-  n_1 -> yellow
-  n_2 -> red
+  red -> red[0<t<=30];
+  red -> green[30<t<=60];
+  green -> green[0<t<=30];
+  green -> yellow[30<t<=40]
+  yellow ->yellow[0<t<=10];
+  yellow ->red[10<t<=40]
 
  }
