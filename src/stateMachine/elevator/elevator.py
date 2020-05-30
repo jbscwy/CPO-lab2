@@ -1,6 +1,3 @@
-
-
-#input is of type list
 from src.stateMachine.elevator.FSM import StateMachine
 
 
@@ -10,7 +7,7 @@ def start_tran(input):
     elif input is 'open':
         new_state = 'OPEN'
     elif input is 'none':
-        new_state = 'ERROR' #初试状态不可以直接通过none动作转换为最终的静止状态
+        new_state = 'ERROR' #The initial state "START" cannot be directly converted to the final state "Static" by "none" action
     else:
         new_state = "ERROR"
     return new_state
@@ -21,7 +18,7 @@ def move_tran(input):
         new_state = 'MOVE'
     elif input is 'open':
         new_state = 'OPEN'
-    elif input is 'none':  #电梯在开门状态时才可以通过none动作进入精致状态
+    elif input is 'none':  #The elevator can only enter the final state "STAIC" through the "none" action when the door is open
         new_state = 'ERROR'
     else:
         new_state = "ERROR"
@@ -52,12 +49,12 @@ if __name__== "__main__":
 
     m.set_start('START')
 
-    m.run(['down','none']) #开始状态，进入move状态，然后想none，进入error状态
-    m.run(['down','down','open','down'])#输出没到达最终状态
-    m.run(['down', 'down', 'open', 'none'])#进入static状态
+    m.run(['down','none'])#use "down" action to transfer state from "start" to "move",then use none action to transfer state from "action" to "static"
+    # ,because the rule says we cant tranfer state from "action" to "static",so transfer to "error" state
+    m.run(['down','down','open','down'])#dont arrive at final state
+    m.run(['down', 'down', 'open', 'none'])#arrive at the final state "STATIC"
 
-#规则
-# 四种动作：rise,down,open,none。none动作表示进入静止状态，只有在开门状态后才能进none，因为运动状态必须先进入开门状态才能进入静止停业状态
-# 五种状态：开始状态，移动状态，开门状态，静止状态（最终状态），错误状态（最终状态）
-# 具体个状态下的转移，看转移函数
-# 到达最终状态会跳出输出结果
+#rules
+# 4 kinds of action：rise,down,open,none。use none to enter "static" state ,we can only enter "static" state when current state is "open"
+# 5 kinds of state：START，MOVE，OPEN，STATIC（the final state），ERROR（the final state）
+# for more details,you can reference state transfer function "move_tran","start_tran","open_tran"
