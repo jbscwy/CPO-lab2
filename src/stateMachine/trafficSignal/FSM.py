@@ -9,7 +9,7 @@ class StateMachine:
         name = name # Convert to uppercase
         self.handlers[name] = handler
         if end_state:
-            self.endStates.append(name)
+          self.endStates.append(name)
 
 
     def set_start(self, name):
