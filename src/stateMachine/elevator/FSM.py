@@ -39,32 +39,18 @@ class StateMachine:
         self.startState = None  # initial state
         self.endStates = []  # Final state list
         self.runResult = 0
-    # def arg_zero(f):
-    #     def arg_zerod(self, *args, **kwargs):
-    #         # print("{}(*{}, **{}) START".format(f.__name__, args, kwargs))
-    #         if len(args) == 0:
-    #             return f(self, *args, **kwargs)
-    #         else:
-    #             print('Input error!')
-    #             return 'Input error!'
-    #     return arg_zerod
 
-    # @arg_zero
-    #The parameter "name" is the name of the state, the handler is the state transfer function,
-    # and end_state indicates whether it is the final state
     @ParamCheck(object,str,object,int)
     def add_state(self, name, handler, end_state=0):
         self.handlers[name] = handler
         if end_state:
             self.endStates.append(name)
 
-    # @arg_zero
     @ParamCheck(object,str)
     def set_start(self, name):
         self.startState = name
 
 
-    # @arg_zero
     @ParamCheck(object,list)
     def run(self, cargo):
         try:

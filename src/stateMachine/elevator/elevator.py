@@ -54,7 +54,4 @@ if __name__== "__main__":
     m.run(['down','down','open','down'])#dont arrive at final state
     m.run(['down', 'down', 'open', 'none'])#arrive at the final state "STATIC"
 
-#rules
-# 4 kinds of action：rise,down,open,none。use none to enter "static" state ,we can only enter "static" state when current state is "open"
-# 5 kinds of state：START，MOVE，OPEN，STATIC（the final state），ERROR（the final state）
-# for more details,you can reference state transfer function "move_tran","start_tran","open_tran"
+
