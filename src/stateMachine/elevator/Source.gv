@@ -1,0 +1,17 @@
+digraph G {
+  rankdir=LR;
+  MOVE[];
+  START[];
+  OPEN[];
+  STATIC[];
+  ERROR[];
+  MOVE -> MOVE[label="rise or down/0"];
+  MOVE -> OPEN[label="open/0"];
+  MOVE -> ERROR[label="none/0"];
+  START -> MOVE[label="rise or down/0"];
+  START -> OPEN[label="open/0"];
+  START -> ERROR[label="none/0"];
+  OPEN -> MOVE[label="rise or down/0"];
+  OPEN -> OPEN[label="open/0"];
+  OPEN -> STATIC[label="none/1"];
+}
