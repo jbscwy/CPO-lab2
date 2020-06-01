@@ -16,9 +16,11 @@ Display as a state graph (GraphViz dots) or table (ASCII).
 Provide a complex example, such as the controller of an elevator, a traffic light at an intersection, and so on.After modification, delete the example of the traffic light at the intersection, the main example is the controller of the elevator
 
 ## contribution summary for each group member
-**To work together:** 
+
+### To work together:
+
 Complete the FSM class together
-**Personal work：**
+### Personal work：
 Mu Yuanai complete the elevator example and the corresponding tests.
 Jia Yuebin complete the trafficSignal example and the corresponding tests（deleted）
 
