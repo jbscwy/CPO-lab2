@@ -1,5 +1,10 @@
-import graphviz
+from typing import TypeVar
 
+import graphviz
+from typing import TypeVar
+
+
+# V = TypeVar(str, list, NontType)
 
 # Parameter check
 RESULT=[]
@@ -14,7 +19,7 @@ def ParamCheck(*ty2):
                 for t_check in ty:
                     r = t_check(x_list_it.__next__())
                     RESULT.append(r)
-                # print('param check result: ',RESULT)
+                print('param check result: ',RESULT)
 
             return fun(*fun_x)
 
@@ -32,6 +37,7 @@ def to_check_fun(t):
 def param_check_test(a,b,c):
     return RESULT
 
+
 class StateMachine:
     def __init__(self):
         self.handlers = {}  # State transfer function dictionary
@@ -42,7 +48,7 @@ class StateMachine:
         self.trans = {}  # Transfer process information
         self.trans_to = {} # "Key" state can be transferred to "value" state
 
-    @ParamCheck(object,str,object,int)
+    @ParamCheck(object,str,object,(list,type(None)),int)
     def add_state(self, name, handler, trans_to, end_state=0):
         '''
         Function introduction:Add state
