@@ -1,30 +1,22 @@
 import graphviz
 
-def ParamCheck(*ty, **argv):
-    ty = map(to_check_fun, ty)
-    argv = dict((i, to_check_fun(argv[i])) for i in argv)
 
+# Parameter check
+RESULT=[]
+def ParamCheck(*ty2):
     def common(fun):
-        def deal(*fun_x, **fun_y):
+        def deal(*fun_x):
+            ty = map(to_check_fun, ty2)
             if ty:
                 x_list = [a for a in fun_x]
                 x_list_it = iter(x_list)
-                result = []
+                RESULT.clear()
                 for t_check in ty:
-                    r = t_check(next(x_list_it))
-                    result.append(r)
+                    r = t_check(x_list_it.__next__())
+                    RESULT.append(r)
+                # print('param check result: ',RESULT)
 
-                print('param check result: ', result)
-
-            if argv:
-                y_dic = dict((i, fun_y[i]) for i in fun_y)
-                result = {}
-                for k in argv.keys():
-                    f = argv[k](y_dic.get(k))
-                    result[k] = f
-                print('param check result: ', result)
-
-            return fun(*fun_x, **fun_y)
+            return fun(*fun_x)
 
         return deal
 
@@ -34,6 +26,11 @@ def ParamCheck(*ty, **argv):
 def to_check_fun(t):
 
     return lambda x:isinstance(x,t)
+
+#Used for parameter type detection unit test
+@ParamCheck(int,int,str)
+def param_check_test(a,b,c):
+    return RESULT
 
 class StateMachine:
     def __init__(self):
@@ -90,8 +87,10 @@ class StateMachine:
         try:
             handler = self.handlers[self.startState]
         except:
+            self.runResult ="must call .set_start() before .run()"
             raise InitializationError("must call .set_start() before .run()")
         if not self.endStates:
+            self.runResult ="at least one state must be an end_state"
             raise InitializationError("at least one state must be an end_state")
 
         # Start running from "Start state"
@@ -142,8 +141,10 @@ class InitializationError(Exception):
         print(self.arg)
 
 
+
 if __name__ =="__main__":
-    #Add state transition function for elevator control
+
+    # Add state transition function for elevator control
     def start_tran(input):
         if input is 'rise' or input is 'down':
             new_state = 'MOVE'
@@ -155,6 +156,7 @@ if __name__ =="__main__":
             new_state = "ERROR"
         return new_state
 
+
     def move_tran(input):
         if input is 'rise' or input is 'down':
             new_state = 'MOVE'
@@ -165,6 +167,7 @@ if __name__ =="__main__":
         else:
             new_state = "ERROR"
         return new_state
+
 
     def open_tran(input):
         if input is 'rise' or input is 'down':
@@ -179,8 +182,9 @@ if __name__ =="__main__":
         return new_state
 
 
-
     m = StateMachine()
+
+
 
     m.add_state('MOVE', move_tran,['MOVE','OPEN','ERROR'],0)
     m.add_state('START', start_tran,['MOVE','OPEN','ERROR'],0)
@@ -197,8 +201,8 @@ if __name__ =="__main__":
 
     m.run(['down','none'])#use "down" action to transfer state from "start" to "move",then use none action to transfer state from "action" to "static"
     # ,because the rule says we cant tranfer state from "action" to "static",so transfer to "error" state
-    # m.run(['down','down','open','down'])#dont arrive at final state
-    # m.run(['down', 'down', 'open', 'none'])#arrive at the final state "STATIC"
+    m.run(['down','down','open','down'])#dont arrive at final state
+    m.run(['down', 'down', 'open', 'none'])#arrive at the final state "STATIC"
 
     dot = m.visualize()
 
