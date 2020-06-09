@@ -19,6 +19,7 @@ def ParamCheck(*ty2):
                 for t_check in ty:
                     r = t_check(x_list_it.__next__())
                     RESULT.append(r)
+
                 print('param check result: ',RESULT)
 
             return fun(*fun_x)

@@ -48,11 +48,12 @@ class EventTest(unittest.TestCase):
     def test_add(self):
 
         m = StateMachine()
-        m.add_state('MOVE', move_tran, 0)
-        m.add_state('START', start_tran, 0)
-        m.add_state('OPEN', open_tran, 0)
-        m.add_state('STATIC', None, 1)
-        m.add_state('ERROR', None, 1)
+        m = StateMachine()
+        m.add_state('MOVE', move_tran, ['MOVE', 'OPEN', 'ERROR'], 0)
+        m.add_state('START', start_tran, ['MOVE', 'OPEN', 'ERROR'], 0)
+        m.add_state('OPEN', open_tran, ['MOVE', 'OPEN', 'STATIC'], 0)
+        m.add_state('STATIC', None, None, 1)
+        m.add_state('ERROR', None, None, 1)
         self.assertEqual(m.handlers, {'MOVE':move_tran,'START':start_tran,'OPEN':open_tran,'STATIC': None,'ERROR': None})
 
     def test_param_check(self):
