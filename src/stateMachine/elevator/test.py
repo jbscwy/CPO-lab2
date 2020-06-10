@@ -1,6 +1,7 @@
 import unittest
 
-from src.stateMachine.elevator.FSM import StateMachine, param_check_test
+from src.stateMachine.elevator.FSM import StateMachine, param_check_test, trace
+
 
 # Add state transition function for elevator control
 def start_tran(input):
@@ -56,14 +57,6 @@ class EventTest(unittest.TestCase):
         m.add_state('ERROR', None, None, 1)
         self.assertEqual(m.handlers, {'MOVE':move_tran,'START':start_tran,'OPEN':open_tran,'STATIC': None,'ERROR': None})
 
-    def test_param_check(self):
-        a=param_check_test(1,2,3)
-        self.assertEqual([True,True,False],a)
-        a=param_check_test(1,'2',3)
-        self.assertEqual([True,False,False],a)
-        a=param_check_test(1,2,'3')
-        self.assertEqual([True,True,True],a)
-
 
     def test_run(self):
         m = StateMachine()
@@ -87,6 +80,13 @@ class EventTest(unittest.TestCase):
         self.assertEqual(m.runResult, "arrived STATIC")
 
 
+    def test_param(self):
+        #Type test the input parameters, execute the function if the type is correct, otherwise output 'false property'
+        #the corret input parameter type was found in the previous test
+        m=StateMachine()
+        self.assertEqual(m.add_state('STATIC', None, None,'1'),'false property')
+        self.assertEqual(m.set_start(0), 'false property')
+        self.assertEqual(m.run('down'), 'false property')
 
 
 if __name__ == '__main__':

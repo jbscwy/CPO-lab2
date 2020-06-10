@@ -18,14 +18,13 @@ def ParamCheck(*ty2):
                 RESULT.clear()
                 for t_check in ty:
                     r = t_check(x_list_it.__next__())
+                    if r is False:
+                        return 'false property'
                     RESULT.append(r)
-
                 print('param check result: ',RESULT)
 
             return fun(*fun_x)
-
         return deal
-
     return common
 
 
@@ -137,6 +136,15 @@ class StateMachine:
         res.append("}")
 
         return "\n".join(res)
+
+def trace(f):
+    def traced(*args, **kwargs):
+        print("{}(*{}, **{}) START".format(f.__name__, args, kwargs))
+        try:
+            return f(*args, **kwargs)
+        finally:
+            print("{} FINISH".format(f.__name__))
+    return traced
 
 
 
