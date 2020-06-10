@@ -1,6 +1,6 @@
 import unittest
 
-from src.stateMachine.elevator.FSM import StateMachine, param_check_test, trace
+from src.stateMachine.elevator.FSM import StateMachine, param_check_test, trace, RESULT
 
 
 # Add state transition function for elevator control
@@ -87,6 +87,30 @@ class EventTest(unittest.TestCase):
         self.assertEqual(m.add_state('STATIC', None, None,'1'),'false property')
         self.assertEqual(m.set_start(0), 'false property')
         self.assertEqual(m.run('down'), 'false property')
+        # Enter the correct or incorrect parameter property, result is different
+        m.add_state('STATIC', None, None, 1)
+        self.assertEqual(RESULT,['true property'])
+        m.add_state('STATIC', None, None, '1')
+        self.assertEqual(RESULT, ['false property'])
+
+        m.add_state('START', start_tran, ['MOVE', 'OPEN', 'ERROR'], 0)
+        # Enter the correct or incorrect parameter property, result is different
+        m.set_start('START')
+        self.assertEqual(RESULT, ['true property'])
+        m.set_start(0)
+        self.assertEqual(RESULT, ['false property'])
+
+        m.add_state('START', start_tran, ['MOVE', 'OPEN', 'ERROR'], 0)
+        m.add_state('MOVE', move_tran, ['MOVE', 'OPEN', 'ERROR'], 0)
+        m.set_start('START')
+        # Enter the correct or incorrect parameter property, result is different
+        m.run(['down'])
+        self.assertEqual(RESULT, ['true property'])
+        m.run('down')
+        self.assertEqual(RESULT, ['false property'])
+
+
+
 
 
 if __name__ == '__main__':

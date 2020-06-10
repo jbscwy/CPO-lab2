@@ -19,10 +19,9 @@ def ParamCheck(*ty2):
                 for t_check in ty:
                     r = t_check(x_list_it.__next__())
                     if r is False:
+                        RESULT.append('false property')
                         return 'false property'
-                    RESULT.append(r)
-                print('param check result: ',RESULT)
-
+                RESULT.append('true property')
             return fun(*fun_x)
         return deal
     return common
